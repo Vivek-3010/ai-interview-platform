@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import Pricing from './_data/Pricing'
+import Pricing from './_data/Pricing.js'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
