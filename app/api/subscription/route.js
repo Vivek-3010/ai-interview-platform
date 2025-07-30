@@ -23,8 +23,12 @@ export async function GET(req) {
 
     return new Response(JSON.stringify(subscription), { status: 200 });
   } catch (error) {
-    console.error("Error fetching subscription:", error);
-    return new Response("Failed to fetch subscription", { status: 500 });
+      console.error("Error fetching subscription:", error);
+      return new Response(JSON.stringify({ error: "Failed to fetch subscription" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+  });
+
   }
 }
 
@@ -42,7 +46,11 @@ export async function POST(req) {
 
     return new Response(JSON.stringify(subscription), { status: 200 });
   } catch (error) {
-    console.error("Error updating subscription:", error);
-    return new Response("Failed to update subscription", { status: 500 });
+      console.error("Error updating subscription:", error);
+      return new Response(JSON.stringify({ error: "Failed to update subscription" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+  });
+
   }
 }

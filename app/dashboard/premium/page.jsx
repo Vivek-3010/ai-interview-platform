@@ -31,7 +31,15 @@ function Premium() {
     const fetchSubscription = async () => {
       try {
         const res = await fetch(`/api/subscription?email=${user?.primaryEmailAddress?.emailAddress}`)
-        const data = await res.json()
+
+        if (!res.ok) {
+          const text = await res.text(); 
+          console.error("Non-JSON response:", text);
+          throw new Error("Subscription fetch failed");
+        }
+
+        const data = await res.json();
+
         setSubscription(data)
       } catch (err) {
         console.error("Error fetching subscription:", err)
