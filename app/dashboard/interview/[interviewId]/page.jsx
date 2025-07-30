@@ -1,4 +1,5 @@
 // File: app/dashboard/interview/[interviewId]/page.jsx
+"use client";
 
 import connectMongoDB from '@/utils/db';
 import MockInterview from '@/models/MockInterview';
