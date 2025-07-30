@@ -1,6 +1,7 @@
 // app/api/user/subscription/route.js
 import connectMongoDB from "@/utils/db";
 import UserSubscription from "@/models/UserSubscription";
+import { NextResponse } from "next/server"; // ✅ ADD THIS
 
 export async function GET(req) {
   try {
@@ -15,20 +16,20 @@ export async function GET(req) {
       // Create a new subscription record if it doesn't exist
       subscription = await UserSubscription.create({
         email,
-        userId: email, // You might want to use Clerk's userId here
+        userId: email, // Replace with Clerk userId if needed
         isSubscribed: false,
-        projectCount: 0
+        projectCount: 0,
+        subscriptionType: "None", // Add default type if not set
       });
     }
 
-    return new Response(JSON.stringify(subscription), { status: 200 });
+    return NextResponse.json(subscription); // ✅ PROPER JSON RESPONSE
   } catch (error) {
-      console.error("Error fetching subscription:", error);
-      return new Response(JSON.stringify({ error: "Failed to fetch subscription" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-  });
-
+    console.error("Error fetching subscription:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch subscription" },
+      { status: 500 }
+    );
   }
 }
 
@@ -44,13 +45,12 @@ export async function POST(req) {
       { new: true, upsert: true }
     );
 
-    return new Response(JSON.stringify(subscription), { status: 200 });
+    return NextResponse.json(subscription); // ✅ PROPER JSON RESPONSE
   } catch (error) {
-      console.error("Error updating subscription:", error);
-      return new Response(JSON.stringify({ error: "Failed to update subscription" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-  });
-
+    console.error("Error updating subscription:", error);
+    return NextResponse.json(
+      { error: "Failed to update subscription" },
+      { status: 500 }
+    );
   }
 }
