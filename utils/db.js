@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-let isConnected = false; // global cache (for hot reloads)
+const connection = {}; // better than global variable
 
 const connectMongoDB = async () => {
-  if (isConnected) {
+  if (connection.isConnected) {
     console.log("✅ Already connected to MongoDB");
-    return true;
+    return;
   }
 
   try {
@@ -14,9 +14,8 @@ const connectMongoDB = async () => {
       socketTimeoutMS: 45000,
     });
 
-    isConnected = db.connections[0].readyState === 1;
+    connection.isConnected = db.connections[0].readyState === 1;
     console.log("✅ Connected to MongoDB");
-    return true;
   } catch (error) {
     console.error("❌ MongoDB connection error:", error);
     throw error;

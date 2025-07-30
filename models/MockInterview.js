@@ -29,4 +29,12 @@ const MockInterviewSchema = new mongoose.Schema({
   timestamps: true 
 });
 
-export default mongoose.models.MockInterview || mongoose.model('MockInterview', MockInterviewSchema);
+// Check if the model already exists to prevent recompilation
+let MockInterview;
+try {
+  MockInterview = mongoose.model('MockInterview');
+} catch {
+  MockInterview = mongoose.model('MockInterview', MockInterviewSchema);
+}
+
+export default MockInterview;

@@ -1,5 +1,4 @@
 // File: app/dashboard/interview/[interviewId]/page.jsx
-"use client";
 
 import connectMongoDB from '@/utils/db';
 import MockInterview from '@/models/MockInterview';
@@ -8,7 +7,7 @@ import InterviewClient from './interviewClient';
 export default async function InterviewPage({ params }) {
   await connectMongoDB();
 
-  const interview = await MockInterview.findOne({ mockId:  params.interviewId }).lean();
+  const interview = await MockInterview.findOne({ mockId: params.interviewId }).lean();
 
   if (!interview) {
     return <div>Interview not found</div>;
